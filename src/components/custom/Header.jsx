@@ -14,14 +14,17 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogClose,
 } from "@/components/ui/dialog";
+
 function Header() {
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     console.log(user);
-  });
+  }, [user]);
 
   const [loading, setLoading] = useState(false);
+
   const GetUserProfile = (tokenInfo) => {
     axios
       .get(
@@ -42,10 +45,12 @@ function Header() {
   };
 
   const [openDialog, setOpenDialog] = useState(false);
+
   const login = useGoogleLogin({
     onSuccess: (codeResp) => GetUserProfile(codeResp),
     onError: (error) => console.log(error),
   });
+
   return (
     <div className="p-3 shadow-sm flex justify-between items-center px-5">
       <img
@@ -90,15 +95,22 @@ function Header() {
           <Button onClick={() => setOpenDialog(true)}>Sign In</Button>
         )}
       </div>
-      <Dialog open={openDialog}>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
+            <DialogClose asChild>
+              <button
+                onClick={() => setOpenDialog(false)}
+                className="absolute top-3 right-3"
+              >
+              </button>
+            </DialogClose>
             <DialogDescription>
               <img src="/logo.svg" alt="" />
               <h2 className="font-bold text-lg mt-7">Sign In with Google</h2>
               <p>Sign in to the App with Google authentication securely</p>
               <Button
-                disbaled={loading}
+                disabled={loading}
                 className="w-full mt-5 flex gap-4 items-center"
                 onClick={login}
               >
