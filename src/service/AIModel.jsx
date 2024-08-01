@@ -1,21 +1,31 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// importing the API KEY from .env file
 const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY;
+
+// making an instance of GoogleGenerativeAI , passing the key to authenticate the request , as this 
+// instance will be used to interact with the AI model
 const genAI = new GoogleGenerativeAI(apiKey);
 
+// get a specific generative model, in this case, "gemini-1.5-flash", from the genAI instance. This model is likely chosen for its capabilities in text generation tasks.
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
 });
 
+// defining the configuration ( like how much better we want the result to be (copied from documentation))
 const generationConfig = {
   temperature: 1,
   topP: 0.95,
   topK: 64,
-  maxOutputTokens: 8192,
-  responseMimeType: "application/json",
+  maxOutputTokens: 8192,  
+  responseMimeType: "application/json", // Desired format of the response (JSON in this case).
 };
 
+// starts a chat session with the selected model using the deined configurations
 export const chatSession = model.startChat({
   generationConfig,
+  
+  // used to provide context to the model
   history: [
     {
       role: "user",

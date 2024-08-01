@@ -21,6 +21,7 @@ function MyTrips() {
     }
 
     console.log(userTrips);
+    // A query to fetch documents from the "AITrips" collection where "userEmail" matches user's email.
     const q = query(
       collection(db, "AITrips"),
       where("userEmail", "==", user?.email)

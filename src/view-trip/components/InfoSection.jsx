@@ -47,9 +47,9 @@ function InfoSection({ trip }) {
             </h2>
           </div>
         </div>
-        <Button>
+        {/* <Button>
           <FaShareAlt />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

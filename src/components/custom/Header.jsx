@@ -18,12 +18,13 @@ import {
 } from "@/components/ui/dialog";
 
 function Header() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user")); // // Retrieve and parse user data from local storage
   useEffect(() => {
-    console.log(user);
+    console.log(user); // Log user data to console whenever it changes
   }, [user]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading status
+  const [openDialog, setOpenDialog] = useState(false); // State for dialog visibility
 
   const GetUserProfile = (tokenInfo) => {
     axios
@@ -31,8 +32,8 @@ function Header() {
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
         {
           headers: {
-            Authorization: `Bearer ${tokenInfo?.access_token}`,
-            Accept: "Application/json",
+            Authorization: `Bearer ${tokenInfo?.access_token}`, // Authorization header with access token
+            Accept: "Application/json", // This line allows us the data to come in json form
           },
         }
       )
@@ -40,11 +41,9 @@ function Header() {
         console.log(resp);
         localStorage.setItem("user", JSON.stringify(resp.data));
         setOpenDialog(false);
-        window.location.reload();
+        window.location.reload(); // Reload the page
       });
   };
-
-  const [openDialog, setOpenDialog] = useState(false);
 
   const login = useGoogleLogin({
     onSuccess: (codeResp) => GetUserProfile(codeResp),
@@ -83,7 +82,7 @@ function Header() {
                   onClick={() => {
                     googleLogout();
                     localStorage.clear();
-                    window.location.reload(); // for reloading
+                    window.location.reload();
                   }}
                 >
                   LogOut

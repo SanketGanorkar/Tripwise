@@ -1,3 +1,5 @@
+// This component gets the user details and displays them in the form of cards.
+
 import { GetPlaceDetails } from "@/service/GlobalAPI";
 import { PHOTO_REF_URL } from "@/service/GlobalAPI";
 import { useState, useEffect } from "react";

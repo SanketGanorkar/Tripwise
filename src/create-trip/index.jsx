@@ -31,6 +31,7 @@ function CreateTrip() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate()
+
   const handleInputChange = (name, value) => {
     setFormData({
       ...formData,
@@ -38,7 +39,8 @@ function CreateTrip() {
     });
   };
 
-  useEffect(() => {
+  // print the data whenever it changes
+  useEffect(() => {  
     console.log(formData);
   }, [formData]);
 
@@ -54,7 +56,6 @@ function CreateTrip() {
       !formData?.traveller
     ) {
       toast("⚠️ Please fill all details");
-
       return;
     }
     setLoading(true);
@@ -90,6 +91,8 @@ function CreateTrip() {
       id: docId
     });
     setLoading(false);
+
+    // As soon as the user is authenticated , redirect to the iternary section with the user generated ID.
     navigate('/view-trip/'+docId)
   };
   const GetUserProfile = (tokenInfo) => {
@@ -134,6 +137,8 @@ function CreateTrip() {
             }}
           />
         </div>
+
+        {/* Getting no of days as input from user */}
         <div>
           <h2 className="text-xl my-3 font-medium">
             How many days are you planning your trip ?
@@ -145,6 +150,8 @@ function CreateTrip() {
           />
         </div>
       </div>
+      
+      {/* Details of Budget available */}
       <div>
         <h2 className="text-xl my-3 font-semibold">What is Your Budget ?</h2>
         <div className="grid grid-cols-3 gap-5 mt-5">
@@ -163,6 +170,8 @@ function CreateTrip() {
           ))}
         </div>
       </div>
+
+      {/* Getting no of people on trip as input from user */}
       <div>
         <h2 className="text-xl my-3 font-medium">
           Who do you plan to travelling with on your next adventure ?
@@ -183,15 +192,20 @@ function CreateTrip() {
           ))}
         </div>
       </div>
+
+      {/* Generate Button and its handling */}
       <div className="my-10 justify-end flex">
         <Button onClick={OnGenerateTrip} disbaled={loading}>
+          {/* Setting the Loader */}
           {loading ? (
-            <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" />
+            <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" /> 
           ) : (
             "Generate Trip"
           )}
         </Button>
       </div>
+
+      {/* If user hasnt signed in open the dialog box */}
       <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>
@@ -216,5 +230,4 @@ function CreateTrip() {
     </div>
   );
 }
-
 export default CreateTrip;
